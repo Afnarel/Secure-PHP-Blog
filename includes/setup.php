@@ -31,8 +31,6 @@ define('DB_DSN_PDO', 'mysql:host='.$HOST.';dbname='.$DB_NAME);
 define('DB_USER', 'root');
 define('DB_PASSWORD', '');
 
-R::setup(DB_DSN_PDO, DB_USER, DB_PASSWORD);
-
 /*
 // DISPLAY ERRORS
 ini_set('display_errors', 1);
@@ -43,7 +41,7 @@ error_reporting(E_ALL);
 ini_set('date.timezone', "Europe/Paris");
 
 define('TITLE', 'The WASP blog', true);
-define('ROOTPATH', '/wasp/', true);
+define('ROOTPATH', '/WASP-blog/', true);
 
 $SCRIPTS = array(
 	'bootstrap.min.js'
@@ -56,4 +54,11 @@ $STYLESHEETS = array(
 
 header("Cache-Control: no-cache, must-revalidate");
 session_start();
+
+try {
+	R::setup(DB_DSN_PDO, DB_USER, DB_PASSWORD);
+}
+catch(PDOException $e) {
+	new Message('error', 'Failed to connect to the database.');
+}
 ?>
