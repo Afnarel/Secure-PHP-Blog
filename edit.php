@@ -12,7 +12,7 @@ else {
 <form method="POST" action="#" class="form-horizontal">
 
 	<div class="control-group">
-		<input type="text" id="post_title" placeholder="Post title" style="width: 100%">
+		<input type="text" id="post_title" placeholder="Post title" style="width: 98.5%">
 	</div>
 
 	<textarea id="post_content" name="post_area"></textarea>
