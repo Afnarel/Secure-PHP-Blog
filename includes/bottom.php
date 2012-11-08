@@ -16,5 +16,6 @@ echo $PAGE_CONTENT;
 ?>
 			</div>
 		</div>
+		<div id="bottom-text">Website created by François Chapuis &amp; Roman Mkrtchian</div>
     </body>
 </html>

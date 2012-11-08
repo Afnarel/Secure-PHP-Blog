@@ -13,7 +13,7 @@
 		// If the user is allowed
 		if($user)
 		{
-			$_SESSION['user'] = $user;
+			$_SESSION['user'] = $user->id;
 			new Message('success', 'You are now logged in! Have fun!');
 		}
 		else {

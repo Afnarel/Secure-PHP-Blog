@@ -4,20 +4,53 @@ require_once(dirname(__FILE__) . '/includes/top.php');
 ?>
 
 <?php
+$NB_POSTS_PER_PAGE = 5;
+$NB_POSTS = R::count('post');
+$page = empty($_GET['p']) ? 0 : $_GET['p'];
+$first = $page * $NB_POSTS_PER_PAGE;
+$last_page = floor(($NB_POSTS-1) / 5);
+$LIMIT_TEXT = true;
 
-	echo is_connected() ? 'connecte' : 'pas connecte';
-	
-	
-foreach(R::findAll('post') as $post){
+foreach(R::findAll('post', " ORDER BY id DESC LIMIT $first, $NB_POSTS_PER_PAGE ") as $post){
 	include('post.php');
-}
 ?>
 	
-	<a href="detail.php#disqus_thread" data-disqus-identifier="lol">Commentaires de l'article</a><br /><br />
-	<?
+    <p>
+    	<a href="detail.php?id=<?php echo $post->id; ?>#disqus_thread" data-disqus-identifier="post-<?php echo $post->id; ?>"></a>
+    </p>
+<?php
 }
-
 ?>
+
+<?php if($NB_POSTS > $NB_POSTS_PER_PAGE) { ?>
+<div class="pagination pagination-large pagination-centered">
+    <ul>
+        <?php
+            if($page == 0) {
+                echo '<li class="disabled"><span>«</span></li>';
+            }
+            else {
+                echo '<li><a href="index.php?p=' . ($page-1) . '">«</a></li>';
+            }
+            for($i=1; $i<($NB_POSTS/$NB_POSTS_PER_PAGE) + 1; $i++) {
+                // If the page is the one on which we are
+                if($page == $i-1) {
+                    echo '<li class="active"><span>' . $i . '</span></li>';
+                }
+                else {
+                    echo '<li><a href="index.php?p=' . ($i-1) . '">' . $i . '</a></li>';
+                }
+            }
+            if($page == $last_page) {
+                echo '<li class="disabled"><span>»</span></li>';
+            }
+            else {
+                echo '<li><a href="index.php?p=' . ($page + 1) . '">»</a></li>';
+            }
+        ?>
+    </ul>
+</div>
+<?php } ?>
 
 <!-- Script permettant d'inclure le nombre de commentaires d'un post -->
 <script type="text/javascript">
