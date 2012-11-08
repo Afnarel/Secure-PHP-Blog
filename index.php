@@ -7,11 +7,13 @@ require_once(dirname(__FILE__) . '/includes/top.php');
 
 	echo is_connected() ? 'connecte' : 'pas connecte';
 	
-for($i=0; $i<10; $i++){
-	?>
-	<p>Contenu de l'article<br />
+	
+foreach(R::findAll('post') as $post){
+	include('post.php');
+}
+?>
+	
 	<a href="detail.php#disqus_thread" data-disqus-identifier="lol">Commentaires de l'article</a><br /><br />
-	</p>
 	<?
 }
 
