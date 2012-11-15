@@ -182,7 +182,7 @@ define('NOREPLY_NAME', 'Website Admin');
 define('DB_HOST', 'localhost');
 define('DB_NAME', 'wasp');
 define('DB_USER', 'root');
-define('DB_PASSWORD', '');
+define('DB_PASSWORD', 'lol');
 define('DB_DSN_PDO', 'mysql:host='.DB_HOST.';dbname='.DB_NAME);
 
 define('LINK_VALIDITY', 1);
