@@ -149,11 +149,7 @@ function storeUniqueToken($table, $id, $identifier, $token, $expiration_date) {
 	$link=<<<END
 <a href="#" onclick="$name.submit()">$text</a>
 <form name="$name" method="POST" action="$url" style="display: none">
-	<input type="hiddà peu près sérieuse qui permet de filtrer les trucs dangereux mais de laisser les trucs pas dangereux
-
-Il y a peut-être des infos sur le site de CKEditor...
-
-Et je te laisse aussi en" name="csrftoken" value="$token" />
+	<input type="hidden" name="csrftoken" value="$token" />
 $paramsString
 </form>
 END;
@@ -182,7 +178,7 @@ define('NOREPLY_NAME', 'Website Admin');
 define('DB_HOST', 'localhost');
 define('DB_NAME', 'wasp');
 define('DB_USER', 'root');
-define('DB_PASSWORD', 'lol');
+define('DB_PASSWORD', '');
 define('DB_DSN_PDO', 'mysql:host='.DB_HOST.';dbname='.DB_NAME);
 
 define('LINK_VALIDITY', 1);
