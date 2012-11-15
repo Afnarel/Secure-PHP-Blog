@@ -50,7 +50,7 @@ require_once(dirname(__FILE__) . '/includes/top.php');
 			else {
 				$identifier = md5($_POST['mail']);
 				$token = uniqueToken();
-				$validationLink = DOMAIN . "/confirm.php?identifier=$identifier&key=$token";
+				$validationLink = DOMAIN . ROOTPATH . "confirm.php?identifier=$identifier&key=$token";
 				$mailSubject = 'Your account validation link for ' . PROJECT_NAME;
 				$mailContent = 'Follow this link to activate your account: ' . $validationLink;
 
