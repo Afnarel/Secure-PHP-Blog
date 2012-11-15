@@ -11,8 +11,8 @@
 		</span>
 		<?php if(!empty($_SESSION['user']) && $post->author == $_SESSION['user']) { ?>
 			<div class="post-actions">
-				[<a href="edit.php?id=<?php echo $post->id; ?>">edit</a>]
-				[<a href="delete.php?id=<?php echo $post->id; ?>">delete</a>]
+				[<?php echo csrfLink('edit_link' . $post->id, 'edit', 'edit.php', array('id' => $post->id))?>]
+				[<?php echo csrfLink('delete_link' . $post->id, 'delete', 'delete.php', array('id' => $post->id))?>]
 			</div>
 		<?php } ?>
 	</h1>

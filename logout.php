@@ -2,7 +2,7 @@
 require_once(dirname(__FILE__) . '/includes/setup.php');
 
 // If the user is connected
-if(is_connected())
+if(is_connected() && csrfCheck())
 {
 	session_destroy();
 	session_start();

@@ -2,15 +2,20 @@
 $PAGE_TITLE = isset($_POST['id']) ? 'Edit post' : 'Create post';
 require_once(dirname(__FILE__) . '/includes/top.php');
 
-if(!is_connected()) {
+if(!is_connected() || !csrfCheck()) {
 	header('Location: ./index.php');
 }
 else {
 	$post = NULL;
-	if(!empty($_GET['id'])) {
-		$post = R::load('post', $_GET['id']);
+	if(!empty($_POST['id'])) {
+		$post = R::load('post', $_POST['id']);
 		if($post->id == 0) {
 			new Message('error', 'This post does not exist');
+			header('Location: ./index.php');
+			exit(0);
+		}
+		else if(empty($_SESSION['user']) || $post->author !== $_SESSION['user']) {
+			new Message('error', 'You don\'t have the right to edit this post');
 			header('Location: ./index.php');
 			exit(0);
 		}

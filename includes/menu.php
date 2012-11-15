@@ -1,6 +1,6 @@
 		<div class="navbar navbar-fixed-top">
 			<div class="navbar-inner">
-				<nav class="container-fluid"><a class="brand" href="<?php echo ROOTPATH ?>">The WASP blog</a>
+				<nav class="container-fluid"><a class="brand" href="<?php echo ROOTPATH ?>"><?php echo PROJECT_NAME ?></a>
 					<div class="nav-collapse">
 						<ul class="nav">
 							<?php if(is_connected()) { ?>
@@ -12,7 +12,7 @@
 						<ul class="nav">
 							<li class="divider-vertical"></li>
 							<?php if(is_connected()) { ?>
-								<li><a href="logout.php">Log out</a></li>
+								<li><?php echo csrfLink('logout_link', 'Log out', 'logout.php') ?></li>
 							<?php } else { ?>
 								<li><a href="signup.php">Sign up</a></li>
 							<?php } ?>
@@ -27,8 +27,8 @@
 							<input type="checkbox"> Remember me
 						</label>
 						<button type="submit" class="btn">Log in</button>
-    				</form>
-    			<?php } ?>
+					</form>
+				<?php } ?>
 				</nav>
 			</div>
 		</div>

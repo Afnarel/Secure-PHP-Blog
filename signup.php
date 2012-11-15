@@ -48,15 +48,31 @@ require_once(dirname(__FILE__) . '/includes/top.php');
 				new Message('error', 'A user with this email address already exists.');
 			}
 			else {
-				$user = R::dispense('user');
-				$user->email = $_POST['mail'];
-				$user->username = $_POST['username'];
-				$user->password = $_POST['password'];
-				if(R::store($user)) {
-					new Message('success', 'Registration successful!');
+				$identifier = md5($_POST['mail']);
+				$token = uniqueToken();
+				$validationLink = DOMAIN . "/confirm.php?identifier=$identifier&key=$token";
+				$mailSubject = 'Your account validation link for ' . PROJECT_NAME;
+				$mailContent = 'Follow this link to activate your account: ' . $validationLink;
+
+				if(sendMail($mailSubject, $mailContent)) {
+					$user = R::dispense('user');
+					$user->email = $_POST['mail'];
+					$user->username = $_POST['username'];
+					$user->password = $_POST['password'];
+					$user->registration_date = now();
+					$user->validated = NULL;
+					$user->last_connection_date = NULL;
+					if(R::store($user)) {
+						// Store the unique account validation token hashed into the database
+						storeUniqueToken('account_validation', $user->id, $identifier, $token, hoursFromNow(LINK_VALIDITY));
+						new Message('success', 'Registration successful!');
+					}
+					else {
+						new Message('error', 'An error occured during the registration process.');
+					}
 				}
 				else {
-					new Message('error', 'An error occured during the registration process.');
+					new Message('Registration failed: confirmation mail could not be sent.');
 				}
 			}
 		}
