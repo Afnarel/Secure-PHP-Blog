@@ -54,7 +54,7 @@ require_once(dirname(__FILE__) . '/includes/top.php');
 				$mailSubject = 'Your account validation link for ' . PROJECT_NAME;
 				$mailContent = 'Follow this link to activate your account: ' . $validationLink;
 
-				if(sendMail($mailSubject, $mailContent)) {
+				if(sendMail($mailSubject, $mailContent, $_POST['mail'], $_POST['username'])) {
 					$user = R::dispense('user');
 					$user->email = $_POST['mail'];
 					$user->username = $_POST['username'];
@@ -64,7 +64,7 @@ require_once(dirname(__FILE__) . '/includes/top.php');
 					$user->last_connection_date = NULL;
 					if(R::store($user)) {
 						// Store the unique account validation token hashed into the database
-						storeUniqueToken('account_validation', $user->id, $identifier, $token, hoursFromNow(LINK_VALIDITY));
+						storeUniqueToken('accountvalidation', $user->id, $identifier, $token, hoursFromNow(LINK_VALIDITY));
 						new Message('success', 'Registration successful!');
 					}
 					else {
