@@ -131,7 +131,11 @@ function sendMail($title, $body) {
 	$link=<<<END
 <a href="#" onclick="$name.submit()">$text</a>
 <form name="$name" method="POST" action="$url" style="display: none">
-	<input type="hidden" name="csrftoken" value="$token" />
+	<input type="hiddà peu près sérieuse qui permet de filtrer les trucs dangereux mais de laisser les trucs pas dangereux
+
+Il y a peut-être des infos sur le site de CKEditor...
+
+Et je te laisse aussi en" name="csrftoken" value="$token" />
 $paramsString
 </form>
 END;
