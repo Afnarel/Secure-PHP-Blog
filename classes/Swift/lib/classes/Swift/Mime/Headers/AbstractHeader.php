@@ -249,7 +249,7 @@ abstract class Swift_Mime_Headers_AbstractHeader implements Swift_Mime_Header
         //Treat token as exactly what was given
         $phraseStr = $string;
         //If it's not valid
-        if (!preg_match('/^' . $this->getGrammar()->getDefinition('phrase') . '$/D', $phraseStr)) {
+        //if (!preg_match('/^' . $this->getGrammar()->getDefinition('phrase') . '$/D', $phraseStr)) {
             // .. but it is just ascii text, try escaping some characters
             // and make it a quoted-string
             if (preg_match('/^' . $this->getGrammar()->getDefinition('text') . '*$/D', $phraseStr)) {
@@ -266,7 +266,7 @@ abstract class Swift_Mime_Headers_AbstractHeader implements Swift_Mime_Header
                 }
                 $phraseStr = $this->encodeWords($header, $string, $usedLength);
             }
-        }
+        //}
 
         return $phraseStr;
     }

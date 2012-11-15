@@ -29,14 +29,32 @@ function hoursFromNow($nb) {
 /**
 * Sends an email to this user with the given title and body
 */
-function sendMail($title, $body) {
+function sendMail($title, $body, $to_mail, $to_username) {
 	$mail = new Mail(array(NOREPLY_ADDRESS => NOREPLY_NAME), $title, $body, $body);
 	$mail->mailer(SMTP_SERVER, SMTP_PORT, SMTP_LOGIN, SMTP_PASSWORD, SMTP_OVER_SSL);
-	$mail->addRecipient($this->mail(), $this->username());
+	$mail->addRecipient($to_mail, $to_username);
 	$failedRecipients = $mail->send();
 	return empty($failedRecipients);
 }
 
+/**
+* Stores a token that will be used, for instance, in password recovery
+* and account validation links
+* The difference between the TheUser::storeToken function and this one is that
+* if a token already exists for the user of id $id, this function will replace
+* its values ($identifier, $token and $expiration_date) instead of creating a new one
+*/
+function storeUniqueToken($table, $id, $identifier, $token, $expiration_date) {
+	$stored_token = R::findOne($table, ' user_id = ? ', array($id));
+	if($stored_token == NULL) {
+		$stored_token = R::dispense($table);
+		$stored_token->user_id = $id;
+	}
+	$stored_token->identifier = $identifier;
+	$stored_token->token = sha1($token);
+	$stored_token->expiration_date = $expiration_date;
+	R::store($stored_token);
+}
 
 
 /* *************************** *

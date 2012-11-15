@@ -1,7 +1,7 @@
 <?php
 require_once(dirname(__FILE__) . '/Swift/lib/swift_required.php');
 
-class CMail {
+class Mail {
 
 	private $message;
 	private $recipients;
