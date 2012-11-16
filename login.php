@@ -4,7 +4,7 @@
 	// If the user isn't connected
 	if(!is_connected())
 	{
-		$user = R::findOne('user',' email = :mail AND password = :password ',
+		$user = R::findOne('user',' email = :mail AND password = :password AND validated IS NOT NULL ',
 			array(
 				':mail' => $_POST['mail'],
 				':password' => $_POST['password']
@@ -17,7 +17,7 @@
 			new Message('success', 'You are now logged in! Have fun!');
 		}
 		else {
-			new Message('error', 'An error occured! <a href="#">Forgot your password?</a>');
+			new Message('error', 'An error occured! <a href="recover.php">Forgot your password?</a>');
 		}
 	}
 	header('Location: ./index.php');

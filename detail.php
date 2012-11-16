@@ -8,7 +8,7 @@ include('post.php');
 ?>
 
 	<!-- Script affichant les commentaires DISQUS -->
-	<iframe seamless="seamless" sandbox="">
+	<iframe seamless="seamless" sandbox="" style="display: hidden">
 		<div id="disqus_thread"></div>
 		<script type="text/javascript">
 			/* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
