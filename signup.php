@@ -58,7 +58,7 @@ require_once(dirname(__FILE__) . '/includes/top.php');
 					$user = R::dispense('user');
 					$user->email = $purifier->purify($_POST['mail']);
 					$user->username = $purifier->purify($_POST['username']);
-					$user->password = $purifier->purify($_POST['password']);
+					$user->password = sha1($purifier->purify($_POST['password']).SALT);
 					$user->registration_date = now();
 					$user->validated = NULL;
 					$user->last_connection_date = NULL;
