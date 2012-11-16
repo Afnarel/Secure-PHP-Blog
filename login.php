@@ -7,7 +7,7 @@
 		$user = R::findOne('user',' email = :mail AND password = :password ',
 			array(
 				':mail' => $purifier->purify($_POST['mail']),
-				':password' => $purifier->purify($_POST['password'])
+				':password' => sha1($purifier->purify($_POST['password']).SALT)
 				));
 			
 		// If the user is allowed

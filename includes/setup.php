@@ -198,6 +198,8 @@ define('PROJECT_NAME', 'The WASP blog');
 define('TITLE', 'The WASP blog', true);
 define('ROOTPATH', '/WASP-blog/', true);
 
+define('SALT', 'zoi#fchz/.?897685kljzamlqa:;/ĵhgzfoi');
+
 $SCRIPTS = array(
 	'bootstrap.min.js'
 );
