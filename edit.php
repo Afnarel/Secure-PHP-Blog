@@ -46,25 +46,12 @@ else {
 
 	<!-- ReCaptcha -->
 <?php echo recaptcha_get_html(RECAPTCHA_PUBLICKEY); ?>
-<?php
-/*
-	<div class="control-group pull-left">
-		<script type="text/javascript"
-			src="http://www.google.com/recaptcha/api/challenge?k=<?php echo RECAPTCHA_PUBLICKEY ?>">
-		</script>
-		<noscript>
-			<iframe src="http://www.google.com/recaptcha/api/noscript?k=<?php echo RECAPTCHA_PUBLICKEY ?>"
-				height="300" width="500" frameborder="0"></iframe><br>
-				<textarea name="recaptcha_challenge_field" rows="3" cols="40"></textarea>
-	     		<input type="hidden" name="recaptcha_response_field" value="manual_challenge">
-	  	</noscript>
-  	</div>
-*/
-?>
+
   	<!-- //ReCaptcha -->
   	<div class="control-group pull-right">
 		<input name="submit_post" class="btn btn-large" style="float: right; margin-top: 10px" type="submit" value="Submit">
 		<input type="hidden" name="csrftoken" value="<?php echo csrfToken(); ?>" />
+		<input type="hidden" name="id" value="<?php echo $_POST['id']; ?>" />
 	</div>
 </form>
 
