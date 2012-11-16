@@ -38,27 +38,27 @@ require_once(dirname(__FILE__) . '/includes/top.php');
 <?php
 	if(isset($_POST['submit_signup'])) {
 		// If the passwords don't match => fail
-		if($_POST['password'] !== $_POST['confirm_password']) {
+		if($purifier->purify($_POST['password']) !== $purifier->purify($_POST['confirm_password'])) {
 			new Message('error', "Passwords don't match!");
 		}
 		else {
 			// If a user with the given email address already exists in the DB => fail
 			if(R::findOne('user',' email = :mail ',
-				array(':mail' => $_POST['mail']))) {
+				array(':mail' => $purifier->purify($_POST['mail'])))) {
 				new Message('error', 'A user with this email address already exists.');
 			}
 			else {
-				$identifier = md5($_POST['mail']);
+				$identifier = md5($purifier->purify($_POST['mail']));
 				$token = uniqueToken();
 				$validationLink = DOMAIN . ROOTPATH . "confirm.php?identifier=$identifier&key=$token";
 				$mailSubject = 'Your account validation link for ' . PROJECT_NAME;
 				$mailContent = 'Follow this link to activate your account: ' . $validationLink;
 
-				if(sendMail($mailSubject, $mailContent, $_POST['mail'], $_POST['username'])) {
+				if(sendMail($mailSubject, $mailContent, $purifier->purify($_POST['mail']), $purifier->purify($_POST['username']))) {
 					$user = R::dispense('user');
-					$user->email = $_POST['mail'];
-					$user->username = $_POST['username'];
-					$user->password = $_POST['password'];
+					$user->email = $purifier->purify($_POST['mail']);
+					$user->username = $purifier->purify($_POST['username']);
+					$user->password = $purifier->purify($_POST['password']);
 					$user->registration_date = now();
 					$user->validated = NULL;
 					$user->last_connection_date = NULL;

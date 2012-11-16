@@ -8,7 +8,7 @@ if(!is_connected()) {
 else {
 	$post = NULL;
 	if(!empty($_POST['id'])) {
-		$post = R::load('post', $_POST['id']);
+		$post = R::load('post', $purifier->purify($_POST['id']));
 		if($post->id == 0) {
 			new Message('error', 'This post does not exist');
 			header('Location: ./index.php');
@@ -47,8 +47,8 @@ else {
 
 	if(isset($_POST['submit_post']) && csrfCheck()) {
 		if($post !== NULL) {
-			$post->title = $_POST['post_title'];
-			$post->content = $_POST['post_content'];
+			$post->title = $purifier->purify($_POST['post_title']);
+			$post->content = $purifier->purify($_POST['post_content']);
 			$post->update_time = toDate(time());
 		}
 		else {
@@ -56,8 +56,8 @@ else {
 			$post = R::dispense('post');
 			$post->creation_time = toDate(time());
 			$post->author = $user->id;
-			$post->title = $_POST['post_title'];
-			$post->content = $_POST['post_content'];
+			$post->title = $purifier->purify($_POST['post_title']);
+			$post->content = $purifier->purify($_POST['post_content']);
 			$post->update_time = NULL;
 		}
 		$id = R::store($post);

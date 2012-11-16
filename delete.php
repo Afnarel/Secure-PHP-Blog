@@ -8,7 +8,7 @@
 		}
 
 		else {
-			$post = R::load('post', $_POST['id']);
+			$post = R::load('post', $purifier->purify($_POST['id']));
 			if($post->id == 0) {
 				new Message('error', 'This post does not exist');
 			}
