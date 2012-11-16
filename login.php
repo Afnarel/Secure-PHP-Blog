@@ -14,6 +14,19 @@
 		if($user)
 		{
 			$_SESSION['user'] = $user->id;
+			if(isset($_POST['rememberme'])) {
+				$identifier = md5($_POST['mail']);
+				$token = uniqueToken();
+
+				// Issue a cookie to the client
+				// bool setcookie ( string $name [, string $value [, int $expire = 0 [, string $path [, string $domain [, bool $secure = false [, bool $httponly = false ]]]]]] )
+				// secure = send only over HTTPS
+				echo '====' . daysFromNow(SESSION_DURATION, true) . '====';
+				setcookie('auth', "$identifier:$token", daysFromNow(SESSION_DURATION, true), '/', '' , HTTPS_ONLY, true);
+
+				// Store the informations in the database
+				storeToken('persistentlogin', $user->id, $identifier, $token, daysFromNow(SESSION_DURATION), false);
+			}
 			new Message('success', 'You are now logged in! Have fun!');
 		}
 		else {

@@ -26,6 +26,11 @@ function hoursFromNow($nb) {
 	return toDate(time()+60*60*$nb);
 }
 
+function daysFromNow($nb, $asUnix = false) {
+	if($asUnix) return time()+60*60*24*$nb;
+	return toDate(time()+60*60*24*$nb);
+}
+
 /**
 * Sends an email to this user with the given title and body
 */
@@ -35,6 +40,19 @@ function sendMail($title, $body, $to_mail, $to_username) {
 	$mail->addRecipient($to_mail, $to_username);
 	$failedRecipients = $mail->send();
 	return empty($failedRecipients);
+}
+
+/**
+* Stores a token that will be used, for instance, in persistent login requests (in a cookie)
+*/
+function storeToken($table, $id, $identifier, $token, $expiration_date) {
+	$stored_token = R::dispense($table);
+	$stored_token->user_id = $id;
+	$stored_token->identifier = $identifier;
+	$stored_token->token = sha1($token);
+	$stored_token->expiration_date = $expiration_date;
+	R::store($stored_token);
+	return $stored_token;
 }
 
 /**
@@ -58,14 +76,10 @@ function storeUniqueToken($table, $id, $identifier, $token, $expiration_date) {
 
 function validateToken($table, $identifier, $token) {
 	// Checks if the access token exists
-	$bean = R::findOne($table,' identifier = :identifier AND token = :token ',
-		array(
-			':identifier' => $identifier,
-			':token' => sha1($token)
-		)
-	);
 
-	if($bean != NULL) {
+	$bean = R::findOne($table,' identifier = ? AND token = ? ', array($identifier, sha1($token)));
+
+	if($bean !== NULL) {
 		// Keep the user_id and the expiration_date, then trash the bean:
 		// it's a "one time only" token and if it has been found, it means
 		// that this is the user it's associated to who issued the request
@@ -219,6 +233,14 @@ define('DB_DSN_PDO', 'mysql:host='.DB_HOST.';dbname='.DB_NAME);
 
 define('LINK_VALIDITY', 1);
 
+define('RECAPTCHA_PUBLICKEY', '6Ld7J9kSAAAAAAVgf3HY-kX54TiG8eWohF3TPHI1');
+define('RECAPTCHA_PRIVATEKEY', '6Ld7J9kSAAAAAOCwpZa_Gr9iZSVETHHGc4PzleLH');
+
+// Used for persistent cookie (both clien-side and server-side) for instance
+define('SESSION_DURATION', 7); // In days
+define('HTTPS_ONLY', false);
+$_SERVER['HTTPS'] = HTTPS_ONLY;
+
 /*
 // DISPLAY ERRORS
 ini_set('display_errors', 1);
@@ -253,6 +275,36 @@ try {
 }
 catch(PDOException $e) {
 	new Message('error', 'Failed to connect to the database.');
+}
+
+if(!is_connected()) {
+	// If the user provides a valid persistent login
+	// cookie, he is logged in
+	if(isset($_COOKIE['auth'])) {
+		// If the token is valid (found in the database and not outdated), return the corresponding user
+		// If the token is invalid, return NULL.
+		list($identifier, $token) = explode(':', $_COOKIE['auth']);
+		$user = validateToken('persistentlogin', $identifier, $token);
+
+		if($user !== NULL) {
+			$user->last_connection_date = now();
+			R::store($user);
+			$_SESSION['user'] = $user->id;
+			if(isset($_POST['rememberme'])) {
+				$identifier = md5($_POST['mail']);
+				$token = uniqueToken();
+
+				// Issue a cookie to the client
+				// bool setcookie ( string $name [, string $value [, int $expire = 0 [, string $path [, string $domain [, bool $secure = false [, bool $httponly = false ]]]]]] )
+				// secure = send only over HTTPS
+				setcookie('auth', "$identifier:$token", daysFromNow(SESSION_DURATION, true), '/', '' , HTTPS_ONLY, true);
+
+				// Store the informations in the database
+				storeToken('persistentlogin', $user->id, $identifier, $token, daysFromNow(SESSION_DURATION), false);
+			}
+			new Message('success', 'You are now logged in! Have fun!');
+		}
+	}
 }
 
 /*********** htmlpurifier ***********************************/

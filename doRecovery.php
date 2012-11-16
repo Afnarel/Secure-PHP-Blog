@@ -16,7 +16,7 @@ if(!is_connected()) {
 						new Message('error', 'Account recovery failed. The recovery link you used may be outdated.');
 					}
 					else {
-						$user->password = $_POST['password'];
+						$user->password = sha1($_POST['password'] . SALT);
 						R::store($user);
 						new Message('success', 'Your password was properly changed.');
 					}

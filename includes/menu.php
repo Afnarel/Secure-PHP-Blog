@@ -24,7 +24,7 @@
 						<input type="email" name="mail" class="input-small" placeholder="Email">
 						<input type="password" name="password" class="input-small" placeholder="Password">
 						<label class="checkbox">
-							<input type="checkbox"> Remember me
+							<input type="checkbox" name="rememberme"> Remember me
 						</label>
 						<button type="submit" class="btn">Log in</button>
 					</form>
