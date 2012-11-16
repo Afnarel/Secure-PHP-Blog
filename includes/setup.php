@@ -289,9 +289,6 @@ if(!is_connected()) {
 		$user = validateToken('persistentlogin', $identifier, $token);
 
 		if($user !== NULL) {
-			$user->last_connection_date = now();
-			R::store($user);
-			$_SESSION['user'] = $user->id;
 			if(isset($_POST['rememberme'])) {
 				$identifier = md5($_POST['mail']);
 				$token = uniqueToken();
@@ -304,6 +301,9 @@ if(!is_connected()) {
 				// Store the informations in the database
 				storeToken('persistentlogin', $user->id, $identifier, $token, daysFromNow(SESSION_DURATION), false);
 			}
+			$user->last_connection_date = now();
+			R::store($user);
+			$_SESSION['user'] = $user->id;
 			new Message('success', 'You are now logged in! Have fun!');
 		}
 	}
