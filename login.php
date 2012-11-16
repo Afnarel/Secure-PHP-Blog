@@ -6,8 +6,8 @@
 	{
 		$user = R::findOne('user',' email = :mail AND password = :password AND validated IS NOT NULL ',
 			array(
-				':mail' => $_POST['mail'],
-				':password' => $_POST['password']
+				':mail' => $purifier->purify($_POST['mail']),
+				':password' => $purifier->purify($_POST['password'])
 				));
 			
 		// If the user is allowed

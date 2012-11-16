@@ -6,7 +6,7 @@ require_once(dirname(__FILE__) . '/includes/top.php');
 <?php
 $NB_POSTS_PER_PAGE = 5;
 $NB_POSTS = R::count('post');
-$page = empty($_GET['p']) ? 0 : $_GET['p'];
+$page = empty($_GET['p']) ? 0 : $purifier->purify($_GET['p']);
 $first = $page * $NB_POSTS_PER_PAGE;
 $last_page = floor(($NB_POSTS-1) / 5);
 $LIMIT_TEXT = true;

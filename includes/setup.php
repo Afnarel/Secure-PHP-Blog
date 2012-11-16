@@ -254,4 +254,12 @@ try {
 catch(PDOException $e) {
 	new Message('error', 'Failed to connect to the database.');
 }
+
+/*********** htmlpurifier ***********************************/
+require_once 'htmlpurifier/HTMLPurifier.auto.php';
+
+$config = HTMLPurifier_Config::createDefault();
+$purifier = new HTMLPurifier($config);
+/************************************************************/
+
 ?>

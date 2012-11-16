@@ -1,9 +1,14 @@
+
+<?php
+require_once(dirname(__FILE__) . '/includes/setup.php');
+?>
+
 <!-- Script affichant les commentaires DISQUS -->
 	<div>
 		<div id="disqus_thread"></div>
 		<script type="text/javascript">
 			/* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
-			var disqus_identifier = "<?php echo $_GET['id'] ?>";
+			var disqus_identifier = "<?php echo $purifier->purify($_GET['id']) ?>";
 			var disqus_shortname = 'blogscu'; // required: replace example with your forum shortname
 			var disqus_title = 'WASP Blog';
 			var disqus_developer = 1;
