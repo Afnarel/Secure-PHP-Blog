@@ -65,14 +65,15 @@ require_once(dirname(__FILE__) . '/includes/top.php');
 					if(R::store($user)) {
 						// Store the unique account validation token hashed into the database
 						storeUniqueToken('accountvalidation', $user->id, $identifier, $token, hoursFromNow(LINK_VALIDITY));
-						new Message('success', 'Registration successful!');
+						new Message('success', 'Registration successful! An email has been sent to your email account
+							along with a link to reset your password. This link will remain valid for 1 hour.');
 					}
 					else {
 						new Message('error', 'An error occured during the registration process.');
 					}
 				}
 				else {
-					new Message('Registration failed: confirmation mail could not be sent.');
+					new Message('error', 'Registration failed: confirmation mail could not be sent.');
 				}
 			}
 		}

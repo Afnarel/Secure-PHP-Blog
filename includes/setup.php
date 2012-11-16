@@ -56,6 +56,42 @@ function storeUniqueToken($table, $id, $identifier, $token, $expiration_date) {
 	R::store($stored_token);
 }
 
+function validateToken($table, $identifier, $token) {
+	// Checks if the access token exists
+	$bean = R::findOne($table,' identifier = :identifier AND token = :token ',
+		array(
+			':identifier' => $identifier,
+			':token' => sha1($token)
+		)
+	);
+
+	if($bean != NULL) {
+		// Keep the user_id and the expiration_date, then trash the bean:
+		// it's a "one time only" token and if it has been found, it means
+		// that this is the user it's associated to who issued the request
+		// (since he knew the $identifier and, most importantly, $token)
+		// If it is then rejected, it can only be that it's oudated in which
+		// case we should trash it anyway
+		$expiration_date = $bean->expiration_date;
+		$user_id = $bean->user_id;
+		R::trash($bean);
+
+		// If the user tries to get an outdated access token
+		// refuse to give him => NULL
+		$expiration_time = toTime($expiration_date);
+		if($expiration_time <= time()) {
+			return NULL;
+		}
+
+		// If the user does not exist (has been deleted since) => NULL
+		$user = R::findOne('user', ' id = ? ', array($user_id));
+		return $user;
+	}
+
+	// If the token was not found in the database (invalid), return NULL
+	return NULL;
+}
+
 
 /* *************************** *
  * ***** CSRF PROTECTION ***** *
@@ -178,7 +214,7 @@ define('NOREPLY_NAME', 'Website Admin');
 define('DB_HOST', 'localhost');
 define('DB_NAME', 'wasp');
 define('DB_USER', 'root');
-define('DB_PASSWORD', 'lol');
+define('DB_PASSWORD', '');
 define('DB_DSN_PDO', 'mysql:host='.DB_HOST.';dbname='.DB_NAME);
 
 define('LINK_VALIDITY', 1);
