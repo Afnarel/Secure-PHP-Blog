@@ -27,6 +27,9 @@ For detailed information (in French), you can read
 Setup
 -----
 
+All the configuration is done by editing the file named `setup.php` in the
+`includes` directory.
+
 First, you need to create a database. By default, this is a MySQL database,
 though you can change this by editing the `DB_DSN_PDO` variable. Edit the
 `DB_HOST`, `DB_NAME`, `DB_USER` and `DB_PASSWORD` variables to match your
@@ -41,6 +44,11 @@ and a few post so that you can quickly see what the blog posts look like.
 Create a ReCaptcha account and update the `RECAPTCHA_PUBLICKEY` and
 `RECAPTCHA_PRIVATEKEY` variables with the public and private key provided by
 the ReCaptcha service.
+
+By default, the comments you will see are those associated with the Disqus
+shortname 'waspblog'. You can change this by creating an account on Disqus
+and setting your own shortname in the `DISQUS_SHORTNAME` variable. Please note
+that Disqus comments will not appear when running locally.
 
 You must then configure the SMTP server that will be used to send emails to
 the users of the blog. The default setup.php file is configured to use a GMail
@@ -61,6 +69,7 @@ Authors
 -------
 
 François CHAPUIS - [Afnarel](http://afnarel.com/)
+
 Roman MKRTCHIAN - [nam0r](https://github.com/nam0r)
 
 License
@@ -69,3 +78,8 @@ License
 This project is distributed under the terms of the
 [Creative Commons CC-BY-SA](http://creativecommons.org/licenses/by-sa/4.0/legalcode)
 license.
+
+Contribution
+------------
+
+If you wish to contribute some code, you are welcome to submit pull requests.
