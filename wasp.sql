@@ -122,7 +122,7 @@ CREATE TABLE IF NOT EXISTS `user` (
 --
 
 INSERT INTO `user` (`id`, `email`, `username`, `password`, `registration_date`, `validated`, `last_connection_date`) VALUES
-(1, 'waspblog2@gmail.com', 'WaspUser', 'a1062333fec4f20af86743259c4abf8e45386939', '2012-11-16 04:09:24', '2012-11-16 04:10:34', '2012-11-16 04:27:43');
+(1, 'user@yopmail.com', 'WaspUser', '8b8ca196994f0a0abe55171c53d0af6d46fd29fa', '2012-11-16 04:09:24', '2012-11-16 04:10:34', '2012-11-16 04:27:43');
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;

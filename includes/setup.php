@@ -219,22 +219,26 @@ require_once(dirname(__FILE__) . '/autoload.php');
 define('SMTP_SERVER', 'smtp.gmail.com');
 define('SMTP_OVER_SSL', true);
 define('SMTP_PORT', 465);
-define('SMTP_LOGIN', 'waspblog2@gmail.com');
-define('SMTP_PASSWORD', 's0m3password');
+define('SMTP_LOGIN', 'YOUR-EMAIL@gmail.com'); // <== EDIT
+define('SMTP_PASSWORD', 'YOUR-PASSWORD'); // <== EDIT
 define('NOREPLY_ADDRESS', 'admin@localhost.org');
 define('NOREPLY_NAME', 'Website Admin');
 
 // Set up the database connection
-define('DB_HOST', 'localhost');
-define('DB_NAME', 'wasp');
-define('DB_USER', 'root');
-define('DB_PASSWORD', 'lol');
+define('DB_HOST', 'localhost'); // <== EDIT
+define('DB_NAME', 'wasp'); // <== EDIT
+define('DB_USER', 'root'); // <== EDIT
+define('DB_PASSWORD', 'toor'); // <== EDIT
 define('DB_DSN_PDO', 'mysql:host='.DB_HOST.';dbname='.DB_NAME);
 
 define('LINK_VALIDITY', 1);
 
-define('RECAPTCHA_PUBLICKEY', '6Ld7J9kSAAAAAAVgf3HY-kX54TiG8eWohF3TPHI1');
-define('RECAPTCHA_PRIVATEKEY', '6Ld7J9kSAAAAAOCwpZa_Gr9iZSVETHHGc4PzleLH');
+// ReCaptcha
+define('RECAPTCHA_PUBLICKEY', 'YOUR-RECAPTCHA-PUBLIC-KEY'); // <== EDIT
+define('RECAPTCHA_PRIVATEKEY', 'YOUR-RECAPTCHA-PRIVATE-KEY'); // <== EDIT
+
+// Disqus
+define('DISQUS_SHORTNAME', 'waspblog'); // <== EDIT
 
 // Used for persistent cookie (both clien-side and server-side) for instance
 define('SESSION_DURATION', 7); // In days
@@ -250,13 +254,13 @@ error_reporting(E_ALL);
 // So that the dates of the posts are the right ones
 ini_set('date.timezone', "Europe/Paris");
 
-define('DOMAIN', 'http://localhost');
+define('DOMAIN', 'http://localhost'); // <== EDIT
 define('PROJECT_NAME', 'The WASP blog');
 
 define('TITLE', 'The WASP blog', true);
-define('ROOTPATH', '/WASP-blog/', true);
+define('ROOTPATH', '/WASP-blog/', true); // <== EDIT
 
-define('SALT', 'zoi#fchz/.?897685kljzamlqa:;/ĵhgzfoi');
+define('SALT', 'zoi#fchz/.?897685kljzamlqa:;/ĵhgzfoi'); // <== EDIT
 
 $SCRIPTS = array(
 	'bootstrap.min.js'

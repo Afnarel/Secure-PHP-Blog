@@ -9,8 +9,8 @@ require_once(dirname(__FILE__) . '/includes/setup.php');
 		<script type="text/javascript">
 			/* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
 			var disqus_identifier = "<?php echo $purifier->purify($_GET['id']) ?>";
-			var disqus_shortname = 'blogscu'; // required: replace example with your forum shortname
-			var disqus_title = 'WASP Blog';
+			var disqus_shortname = '<?php echo DISQUS_SHORTNAME; ?>'; // required: replace example with your forum shortname
+			var disqus_title = '<?php echo TITLE; ?>';
 			var disqus_developer = 1;
 
 			/* * * DON'T EDIT BELOW THIS LINE * * */

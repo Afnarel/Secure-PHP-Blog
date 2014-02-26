@@ -55,8 +55,8 @@ foreach(R::findAll('post', " ORDER BY id DESC LIMIT $first, $NB_POSTS_PER_PAGE "
 <!-- Script permettant d'inclure le nombre de commentaires d'un post -->
 <script type="text/javascript">
         /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
-        var disqus_shortname = 'blogscu'; // required: replace example with your forum shortname
-        var disqus_title = 'WASP Blog';
+        var disqus_shortname = '<?php echo DISQUS_SHORTNAME; ?>'; // required: replace example with your forum shortname
+        var disqus_title = '<?php echo TITLE; ?>';
         var disqus_developer = 1;
 
         /* * * DON'T EDIT BELOW THIS LINE * * */
